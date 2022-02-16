@@ -15,13 +15,10 @@ def abbrev():
     """
 
     abv = {
-
         'cwd': 'current working directory'
-
     }
 
     print (abv)
-
 
 
 def set_dir(path='None', reset = False):
@@ -80,15 +77,13 @@ def mftf(src,dest,files):
     set_dir(reset=True)
     print('Done!')
 
+
 def run(src=None,dest=None,files=None):
 
     if not src:
         src = input('Enter source folder: ').replace('\'','')
-
-
     if not dest:
         dest = input('Enter destination folder: ').replace('\'','')
-
     if not files:
         files = input('Enter files or .txt')
 
@@ -104,8 +99,8 @@ def run(src=None,dest=None,files=None):
 
 if __name__ == "__main__":
 
-    src = '/Users/sammyoge/Desktop/Blessing_to_Burden'
-    dest = '/Users/sammyoge/Desktop/Blessing_to_Burden/TEMP'
+    # src = '/Users/sammyoge/Desktop/Blessing_to_Burden'
+    # dest = '/Users/sammyoge/Desktop/Blessing_to_Burden/TEMP'
 
     files = """DSC_6601.NEF 
     DSC_6503.NEF 
