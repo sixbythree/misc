@@ -3,6 +3,7 @@ import datetime
 # import numpy as np
 import os
 import re
+import webbrowser
 import subprocess as sp
 import webbrowser as wb
 # import requests
@@ -99,6 +100,7 @@ def run(src=None,dest=None,files=None):
 
 if __name__ == "__main__":
 
+    # webbrowser.open('file:///Users/sammyoge/Desktop/Blessing_to_Burden')
     # src = '/Users/sammyoge/Desktop/Blessing_to_Burden'
     # dest = '/Users/sammyoge/Desktop/Blessing_to_Burden/TEMP'
 
