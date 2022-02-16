@@ -90,21 +90,22 @@ def run(src=None,dest=None,files=None):
         dest = input('Enter destination folder: ').replace('\'','')
 
     if not files:
-        data = input('Enter files or .txt')
-        if '.txt' in x:
-            with open(data) as f:
-                content = f.readlines()
-                c = raw_plus_jpg(content)
-        else:
-            c = raw_plus_jpg(data)
+        files = input('Enter files or .txt')
 
-    mftf(src, dest, c)
+    if '.txt' in files:
+        with open(files) as f:
+            content = f.readlines()
+            data = raw_plus_jpg(content)
+    else:
+        data = raw_plus_jpg(files)
+
+    mftf(src, dest, data)
 
 
 if __name__ == "__main__":
 
-    #src = '/Users/sammyoge/Desktop/Blessing_to_Burden'
-    #dest = '/Users/sammyoge/Desktop/Blessing_to_Burden/TEMP'
+    src = '/Users/sammyoge/Desktop/Blessing_to_Burden'
+    dest = '/Users/sammyoge/Desktop/Blessing_to_Burden/TEMP'
 
     files = """DSC_6601.NEF 
     DSC_6503.NEF 
@@ -136,7 +137,7 @@ if __name__ == "__main__":
     DSC_6508.NEF 
     DSC_6606.NEF"""
 
-    run()
+    run(src,dest,'/Users/sammyoge/Desktop/pics.txt')
 
 
 
