@@ -67,7 +67,7 @@ def raw_plus_jpg(files):
     """
 
     if type(files) == str:
-        nefs = list(filter(None,re.sub(r"[\n]*", "", files).split(' ')))
+        nefs = list(filter(None,re.sub(r"[\n,]*", "", files).split(' ')))
     elif type(files) == list:
         nefs = ''.join(files).replace('\n', '').split(' ')
 
@@ -131,40 +131,10 @@ if __name__ == "__main__":
     # src = '/Users/sammyoge/Desktop/Blessing_to_Burden'
     # dest = '/Users/sammyoge/Desktop/Blessing_to_Burden/TEMP'
 
-    files = """DSC_6601.NEF 
-    DSC_6503.NEF 
-    DSC_6621.NEF 
-    DSC_6515.NEF 
-    DSC_6525.NEF 
-    DSC_6624.NEF 
-    DSC_6590.NEF 
-    DSC_6528.NEF 
-    DSC_6612.NEF 
-    DSC_6542.NEF 
-    DSC_6504.NEF 
-    DSC_6631.NEF 
-    DSC_6521.NEF 
-    DSC_6632.NEF 
-    DSC_6578.NEF 
-    DSC_6574.NEF 
-    DSC_6628.NEF 
-    DSC_6623.NEF 
-    DSC_6516.NEF 
-    DSC_6614.NEF 
-    DSC_6625.NEF 
-    DSC_6626.NEF 
-    DSC_6629.NEF 
-    DSC_6627.NEF 
-    DSC_6619.NEF 
-    DSC_6536.NEF 
-    DSC_6591.NEF 
-    DSC_6508.NEF 
-    DSC_6606.NEF"""
+    files = """DSC_6601.NEF, DSC_6503.NEF, DSC_6621.NEF, DSC_6515.NEF, DSC_6525.NEF, DSC_6624.NEF, DSC_6590.NEF 
+    DSC_6528.NEF, DSC_6612.NEF, DSC_6542.NEF, DSC_6504.NEF, DSC_6631.NEF, DSC_6521.NEF, DSC_6632.NEF, DSC_6578.NEF 
+    DSC_6574.NEF, DSC_6628.NEF, DSC_6623.NEF, DSC_6516.NEF, DSC_6614.NEF, DSC_6625.NEF, DSC_6626.NEF, DSC_6629.NEF 
+    DSC_6627.NEF, DSC_6619.NEF, DSC_6536.NEF, DSC_6591.NEF, DSC_6508.NEF, DSC_6606.NEF"""
 
     run()
-
-
-
-
-
 
