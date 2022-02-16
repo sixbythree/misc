@@ -3,11 +3,29 @@ import datetime
 # import numpy as np
 import os
 import re
+import sys
 import webbrowser
 import subprocess as sp
 import webbrowser as wb
 # import requests
 orig_dir = os.getcwd()
+
+# SCRIPT PURPOSE
+# - CREATE A SCRIPT THAT MOVE SPECIFIED FILES FROM SOURCE FOLDER TO NEW DIRECTORY.
+
+# WORKFLOW:
+# A. SOURCE FOLDER
+#    i. PROVIDED:
+#    ii. NOT PROVIDED:
+# B. DESTINATION FOLDER
+#    i. PROVIDED:
+#    ii. NOT PROVIDED:
+# C. FILE LIST
+#    - TESTING HAS BEEN DONE PRIMARILY ON A LIST OF .NEF FILES.
+#    i. PROVIDED: FORMAT FILE LIST TO ENSURE THAT ALL FILES TO BE MOVED ARE SPECIFIED.
+#    ii. NOT PROVIDED: END SCRIPT
+
+# 1. FUNCTIONS
 
 def abbrev():
     """
@@ -53,6 +71,7 @@ def raw_plus_jpg(files):
     elif type(files) == list:
         nefs = ''.join(files).replace('\n', '').split(' ')
 
+
     jpgs = ','.join(nefs).replace('.NEF','.JPG').split(',')
 
     return ' '.join(sorted(nefs + jpgs))
@@ -70,10 +89,12 @@ def mftf(src,dest,files):
         return
 
     if not os.path.isdir(dest):
-        print('Creating directory %s' % dest)
+        print('Creating directory TEMP folder in %s...' % src)
         os.mkdir('%s' % dest)
+
     command = "mv {f} {d}".format(f=files,d=dest)
-    print (command)
+    print("Moving {f} to {d}".format(f= ', '.join(files.split(' ')),d=dest))
+    #print(command)
     os.system(command)
     set_dir(reset=True)
     print('Done!')
@@ -82,11 +103,17 @@ def mftf(src,dest,files):
 def run(src=None,dest=None,files=None):
 
     if not src:
-        src = input('Enter source folder: ').replace('\'','')
+        src = input('Enter source folder: ').replace('\'','').strip(' ')
+        if not src:
+            print("No source folder provided. Goodbye!")
+            return
     if not dest:
-        dest = input('Enter destination folder: ').replace('\'','')
+        dest = input('Enter destination folder: ').replace('\'','').strip(' ') or src + '/TEMP'
     if not files:
-        files = input('Enter files or .txt: ' )
+        files = input('Enter files or .txt: ').strip(' ')
+        if not files:
+            print("No files specified. Goodbye!")
+            return
 
     if '.txt' in files:
         with open(files) as f:
