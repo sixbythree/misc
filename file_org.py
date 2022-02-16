@@ -86,7 +86,7 @@ def run(src=None,dest=None,files=None):
     if not dest:
         dest = input('Enter destination folder: ').replace('\'','')
     if not files:
-        files = input('Enter files or .txt')
+        files = input('Enter files or .txt: ' )
 
     if '.txt' in files:
         with open(files) as f:
@@ -134,7 +134,7 @@ if __name__ == "__main__":
     DSC_6508.NEF 
     DSC_6606.NEF"""
 
-    run(src,dest,'/Users/sammyoge/Desktop/pics.txt')
+    run()
 
 
 
