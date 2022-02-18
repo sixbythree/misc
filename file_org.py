@@ -69,7 +69,7 @@ def raw_plus_jpg(files):
     if type(files) == str:
         nefs = list(filter(None,re.sub(r"[\n,]*", "", files).split(' ')))
     elif type(files) == list:
-        nefs = ''.join(files).replace('\n', '').split(' ')
+        nefs = ','.join(files).replace('\n', '').split(',')
 
 
     jpgs = ','.join(nefs).replace('.NEF','.JPG').split(',')
