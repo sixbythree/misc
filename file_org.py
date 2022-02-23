@@ -59,6 +59,23 @@ def set_dir(path='None', reset = False):
     return True
 
 
+def file_input(files, folder):
+
+    if not files:
+        data = input('Enter files or .txt: ').strip(' ')
+        if not data:
+
+            print("No files specified. Goodbye!")
+            return
+
+    if '.txt' in files:
+        with open(files) as f:
+            content = f.readlines()
+            data = raw_plus_jpg(content)
+    else:
+        data = raw_plus_jpg(files)
+
+
 def raw_plus_jpg(files):
     """
     Format.
@@ -77,7 +94,7 @@ def raw_plus_jpg(files):
     return ' '.join(sorted(nefs + jpgs))
 
 
-def mftf(src,dest,files):
+def mftf(src,dest,docs):
     """
     Move Files to specified folder.
     :param: None
@@ -91,6 +108,7 @@ def mftf(src,dest,files):
     if not os.path.isdir(dest):
         print('Creating directory TEMP folder in %s...' % src)
         os.mkdir('%s' % dest)
+
 
     command = "mv {f} {d}".format(f=files,d=dest)
     print("Moving {f} to {d}".format(f= ', '.join(files.split(' ')),d=dest))
@@ -109,18 +127,8 @@ def run(src=None,dest=None,files=None):
             return
     if not dest:
         dest = input('Enter destination folder: ').replace('\'','').strip(' ') or src + '/TEMP'
-    if not files:
-        files = input('Enter files or .txt: ').strip(' ')
-        if not files:
-            print("No files specified. Goodbye!")
-            return
 
-    if '.txt' in files:
-        with open(files) as f:
-            content = f.readlines()
-            data = raw_plus_jpg(content)
-    else:
-        data = raw_plus_jpg(files)
+    file_input(files)
 
     mftf(src, dest, data)
 
