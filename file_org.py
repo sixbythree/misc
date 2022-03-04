@@ -70,7 +70,7 @@ def file_input(files, folder):
             command = "ls -p | grep -v /"
             files = list(filter(None,os.popen(command).read().split('\n')))
             set_dir(reset=True)
-            return files
+            return ' '.join(files)
 
     if '.txt' in files:
         with open(files) as f:
@@ -98,7 +98,7 @@ def raw_plus_jpg(files):
     return ' '.join(sorted(nefs + jpgs))
 
 
-def mftf(src,dest,docs):
+def mftf(src,dest,data):
     """
     Move Files to specified folder.
     :param: None
@@ -114,8 +114,8 @@ def mftf(src,dest,docs):
         os.mkdir('%s' % dest)
 
 
-    command = "mv {f} {d}".format(f=files,d=dest)
-    print("Moving {f} to {d}".format(f= ', '.join(files.split(' ')),d=dest))
+    command = "mv {f} {d}".format(f=data,d=dest)
+    print("Moving {f} to {d}".format(f= ', '.join(data.split(' ')),d=dest))
     #print(command)
     os.system(command)
     set_dir(reset=True)
@@ -133,7 +133,7 @@ def run(src=None,dest=None,files=None):
         dest = input('Enter destination folder: ').replace('\'','').strip(' ') or src + '/TEMP'
 
     data = file_input(files,src)
-
+    #print (data)
     mftf(src, dest, data)
 
 
@@ -143,10 +143,10 @@ if __name__ == "__main__":
     # src = '/Users/sammyoge/Desktop/Blessing_to_Burden'
     # dest = '/Users/sammyoge/Desktop/Blessing_to_Burden/TEMP'
 
-    files = """DSC_6601.NEF, DSC_6503.NEF, DSC_6621.NEF, DSC_6515.NEF, DSC_6525.NEF, DSC_6624.NEF, DSC_6590.NEF 
-    DSC_6528.NEF, DSC_6612.NEF, DSC_6542.NEF, DSC_6504.NEF, DSC_6631.NEF, DSC_6521.NEF, DSC_6632.NEF, DSC_6578.NEF 
-    DSC_6574.NEF, DSC_6628.NEF, DSC_6623.NEF, DSC_6516.NEF, DSC_6614.NEF, DSC_6625.NEF, DSC_6626.NEF, DSC_6629.NEF 
-    DSC_6627.NEF, DSC_6619.NEF, DSC_6536.NEF, DSC_6591.NEF, DSC_6508.NEF, DSC_6606.NEF"""
+    # files = """DSC_6601.NEF, DSC_6503.NEF, DSC_6621.NEF, DSC_6515.NEF, DSC_6525.NEF, DSC_6624.NEF, DSC_6590.NEF
+    # DSC_6528.NEF, DSC_6612.NEF, DSC_6542.NEF, DSC_6504.NEF, DSC_6631.NEF, DSC_6521.NEF, DSC_6632.NEF, DSC_6578.NEF
+    # DSC_6574.NEF, DSC_6628.NEF, DSC_6623.NEF, DSC_6516.NEF, DSC_6614.NEF, DSC_6625.NEF, DSC_6626.NEF, DSC_6629.NEF
+    # DSC_6627.NEF, DSC_6619.NEF, DSC_6536.NEF, DSC_6591.NEF, DSC_6508.NEF, DSC_6606.NEF"""
 
-    #run()
+    run()
 
