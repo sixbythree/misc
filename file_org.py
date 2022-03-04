@@ -65,8 +65,12 @@ def file_input(files, folder):
         data = input('Enter files or .txt: ').strip(' ')
         if not data:
 
-            print("No files specified. Goodbye!")
-            return
+            print("No files specified. Searching folder for all files...")
+            set_dir(folder)
+            command = "ls -p | grep -v /"
+            files = list(filter(None,os.popen(command).read().split('\n')))
+            set_dir(reset=True)
+            return files
 
     if '.txt' in files:
         with open(files) as f:
@@ -128,7 +132,7 @@ def run(src=None,dest=None,files=None):
     if not dest:
         dest = input('Enter destination folder: ').replace('\'','').strip(' ') or src + '/TEMP'
 
-    file_input(files)
+    data = file_input(files,src)
 
     mftf(src, dest, data)
 
@@ -144,5 +148,5 @@ if __name__ == "__main__":
     DSC_6574.NEF, DSC_6628.NEF, DSC_6623.NEF, DSC_6516.NEF, DSC_6614.NEF, DSC_6625.NEF, DSC_6626.NEF, DSC_6629.NEF 
     DSC_6627.NEF, DSC_6619.NEF, DSC_6536.NEF, DSC_6591.NEF, DSC_6508.NEF, DSC_6606.NEF"""
 
-    run()
+    #run()
 
