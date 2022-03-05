@@ -130,7 +130,10 @@ def run(src=None,dest=None,files=None):
             print("No source folder provided. Goodbye!")
             return
     if not dest:
-        dest = input('Enter destination folder: ').replace('\'','').strip(' ') or src + '/TEMP'
+        dest = input('Enter destination folder: ').replace('\'','').strip(' ') or\
+               input("Making new directory in %s. Enter directory name else 'temp'"
+                     " will be used: " % src).replace('\'','').strip(' ') or\
+               src + '/temp'
 
     data = file_input(files,src)
     #print (data)
