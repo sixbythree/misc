@@ -3,6 +3,8 @@ import datetime
 # import numpy as np
 import os
 import itertools
+import configparser
+import helper as hlp
 import re
 import sys
 import webbrowser
@@ -10,38 +12,19 @@ import subprocess as sp
 import webbrowser as wb
 # import requests
 orig_dir = os.getcwd()
+phq = '/Users/sammyoge/photo_hq'
 folder_path = '/Volumes/NIKON D850 /DCIM/115ND850'
 
+config = configparser.ConfigParser()
+config.read(phq + 'phq.cfg')
 
-# def mftf(src,dest,data):
-#     """
-#     Move Files to specified folder.
-#     :param: None
-#     :return:
-#     """
-#
-#     # if not set_dir(src):
-#     #     print('Source Folder does not exist')
-#     #     return
-#     #
-#     # if not os.path.isdir(dest):
-#     #     print('Creating directory TEMP folder in %s...' % src)
-#     #     os.mkdir('%s' % dest)
-#
-#
-#     command = "ls -l | cut -w -f 6,7,9"
-#     # print("Moving {f} to {d}".format(f= ', '.join(data.split(' ')),d=dest))
-#     # #print(command)
-#     # os.system(command)
-#     # set_dir(reset=True)
-#     # print('Done!')
-#
-#     os.popen(command).read().split('\n'))
+def read_files(path=None):
 
-# Lists the date and filename for each file in folder
-# Final result is converted into a list.
+    folder = path or orig_dir
 
-data = list(filter(len,os.popen("ls | xargs stat -f '%SB %N' -t'%m-%d-%y'").read().split('\n')))
+    data = list(filter(len,os.popen("ls | xargs stat -f '%SB %N' -t'%m-%d-%y'").read().split('\n')))
+
+    return
 
 def files_dict(data):
     """
@@ -69,5 +52,5 @@ def files_of(data, key):
 dest = '/Users/sammyoge/photo_temp/' + list(files.keys())[7]
 os.mkdir('%s' % dest)
 command = 'cp {f} {d}'.format(f=docs,d=dest)
-
+os.system(command)
 
