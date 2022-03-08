@@ -38,28 +38,33 @@ folder_path = '/Volumes/NIKON D850 /DCIM/115ND850'
 #
 #     os.popen(command).read().split('\n'))
 
-# Lists all files in folder in long format (displaying file details) and cuts
-# results by consecutive whitespaces and choosing which columns to keep.
+# Lists the date and filename for each file in folder
 # Final result is converted into a list.
 
-data = list(filter(len,os.popen('ls -l | cut -w -f 6,7,9').read().replace('\t',' ').split('\n')))
+data = list(filter(len,os.popen("ls | xargs stat -f '%SB %N' -t'%m-%d-%y'").read().split('\n')))
 
-key_func = lambda x: x[0:6]
+def files_dict(data):
+    """
+    Creates dictionary for data where key is file creation date and values are list of files of key date.
+    Data must be in 'MM-DD-YY <FILE>' Format.
 
-files = {}
+    :param data (list): List of files with date information.
+    :return:
+    """
 
-for key, value in itertools.groupby(data,key_func):
-    files[key.rstrip(' ').replace(' ','_')] = [i.replace('{}'.format(key),'').lstrip(' ') for i in list(value)]
+    files = {}
+    key_func = lambda x: x[0:8]
 
-if not os.path.isdir(dest):
-    print('Creating directory TEMP folder in %s...' % src)
-    os.mkdir('%s' % dest)
+    for key, value in itertools.groupby(data,key_func):
+        files[key] = [i.replace('{}'.format(key),'').lstrip(' ') for i in list(value)]
 
+    return files
 
+def files_of(data, key):
 
-files[list(files.keys())[0]]
+    files = ' '.join(data[key])
 
-docs = ' '.join(files[list(files.keys())[7]])
+    return files
 
 dest = '/Users/sammyoge/photo_temp/' + list(files.keys())[7]
 os.mkdir('%s' % dest)
