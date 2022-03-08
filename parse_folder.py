@@ -22,9 +22,11 @@ def read_files(path=None):
 
     folder = path or orig_dir
 
-    data = list(filter(len,os.popen("ls | xargs stat -f '%SB %N' -t'%m-%d-%y'").read().split('\n')))
+    data = sp.run("ls | xargs stat -f '%SB %N' -t'%m-%d-%y'", cwd=folder, capture_output=True).stdout.decode("utf-8")
 
-    return
+    d = list(filter(len,data.read().split('\n')))
+
+    return data
 
 def files_dict(data):
     """
