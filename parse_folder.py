@@ -29,7 +29,7 @@ def client(ctype=None):
     elif ctype == 'rwci':
         return config['PATHS']['rwci_dest_path']
     else:
-        return '/Users/sammyoge/photo_hq/'
+        return input('Enter directory of files to be read:') or '/Users/sammyoge/photo_hq/'
 
 def read_files(path=None):
     """
@@ -71,32 +71,32 @@ def files_of(data, key):
     return files
 
 
-def run(loc):
+def run(to,fr=None):
     """
     :param data (list): List of files with date information.
     :return:
     """
 
-    src = client('sd')
+    src = client(fr)
 
-    dest = client(loc)
+    dest = client(to)
 
     data = read_files(path=src)
     catalog = files_dict(data)
-    ','.join(list(catalog.keys()))
-
-    cmd1 = 'mkdir {%s}' % ','.join(list(catalog.keys()))
+    folders = ' '.join(list(catalog.keys()))
+    print(folders)
+    cmd1 = 'mkdir %s' % folders
     sp.run(cmd1, cwd=dest, shell=True)
 
-    cmd1 = 'mkdir {%s}' % ','.join(list(catalog.keys()))
+    #cmd1 = 'mkdir {%s}' % ','.join(list(catalog.keys()))
 
-    [  for k in ]
+    #[  for k in ]
 
     wb.open('file:///' + dest)
     #os.mkdir('{%s}' % dest)
 
 
-dest = '/Users/sammyoge/photo_temp/' + list(files.keys())[7]
-os.mkdir('%s' % dest)
-command = 'cp {f} {d}'.format(f=docs,d=dest)
-os.system(command)
+# dest = '/Users/sammyoge/photo_temp/' + list(files.keys())[7]
+# os.mkdir('%s' % dest)
+# command = 'cp {f} {d}'.format(f=docs,d=dest)
+# os.system(command)
