@@ -71,15 +71,17 @@ def files_of(data, key):
     return files
 
 
-def run(to,fr=None):
+def run(to=None,fr=None):
     """
     :param data (list): List of files with date information.
     :return:
     """
 
     src = client(fr)
+    print('Reading contents of %s' % src)
 
     dest = client(to)
+    print('Writing contents of %s to %s' % (src,dest))
 
     data = read_files(path=src)
     catalog = files_dict(data)
