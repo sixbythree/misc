@@ -29,7 +29,7 @@ def client(ctype=None):
     elif ctype == 'rwci':
         return config['PATHS']['rwci_dest_path']
     else:
-        return input('Enter directory of files to be read:') or '/Users/sammyoge/photo_hq/'
+        return input('Enter desired directory:') or '/Users/sammyoge/photo_hq/'
 
 def read_files(path=None):
     """
@@ -64,11 +64,9 @@ def files_dict(data):
     return files
 
 
-def files_of(data, key):
+def form(data,sep=' '):
 
-    files = ' '.join(data[key])
-
-    return files
+    return '{}'.format(sep).join(data)
 
 
 def run(to=None,fr=None):
@@ -84,15 +82,16 @@ def run(to=None,fr=None):
     print('Writing contents of %s to %s' % (src,dest))
 
     data = read_files(path=src)
-    catalog = files_dict(data)
-    folders = ' '.join(list(catalog.keys()))
-    print(folders)
-    cmd1 = 'mkdir %s' % folders
+    content = files_dict(data)
+    catalog = form(list(content.keys()))
+    print(catalog)
+    cmd1 = 'mkdir %s' % catalog
     sp.run(cmd1, cwd=dest, shell=True)
-
+    print(content)
     #cmd1 = 'mkdir {%s}' % ','.join(list(catalog.keys()))
 
-    #[  for k in ]
+    [sp.run('cp {f} {d}'.format(f=form(content[k]), d=dest + k), cwd=src,
+            shell=True) for k in list(content.keys())]
 
     wb.open('file:///' + dest)
     #os.mkdir('{%s}' % dest)
