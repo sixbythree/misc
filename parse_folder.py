@@ -69,6 +69,14 @@ def form(data,sep=' '):
     return '{}'.format(sep).join(data)
 
 
+def select_dates(content):
+
+    d = input("""Enter desired date for file copying from the available 
+                 dates listed below:\n{} \n>""".format('\n'.join(list(content.keys()))))
+
+    return d.split() or list(content.keys())
+
+
 def run(to=None,fr=None):
     """
     :param data (list): List of files with date information.
@@ -79,19 +87,21 @@ def run(to=None,fr=None):
     print('Reading contents of %s' % src)
 
     dest = client(to)
-    print('Writing contents of %s to %s' % (src,dest))
 
     data = read_files(path=src)
     content = files_dict(data)
-    catalog = form(list(content.keys()))
-    print(catalog)
-    cmd1 = 'mkdir %s' % catalog
+    catalog = select_dates(content)
+    folders = form(catalog)
+    print(folders)
+
+    print('Writing contents of %s to %s' % (src, dest))
+    cmd1 = 'mkdir %s' % folders
     sp.run(cmd1, cwd=dest, shell=True)
     print(content)
     #cmd1 = 'mkdir {%s}' % ','.join(list(catalog.keys()))
 
     [sp.run('cp {f} {d}'.format(f=form(content[k]), d=dest + k), cwd=src,
-            shell=True) for k in list(content.keys())]
+            shell=True) for k in catalog]
 
     wb.open('file:///' + dest)
     #os.mkdir('{%s}' % dest)
