@@ -100,8 +100,10 @@ def run(to=None,fr=None):
     print(content)
     #cmd1 = 'mkdir {%s}' % ','.join(list(catalog.keys()))
 
-    [sp.run('cp {f} {d}'.format(f=form(content[k]), d=dest + k), cwd=src,
-            shell=True) for k in catalog]
+    cp_cmd = []
+    cp_cmd += ['cp {f} {d}'.format(f=form(content[k]), d=dest + k) for k in catalog]
+    print(cp_cmd)
+    [sp.run(cp_cmd,cwd=src,shell=True) for cmd in cp_cmd]
 
     wb.open('file:///' + dest)
     #os.mkdir('{%s}' % dest)

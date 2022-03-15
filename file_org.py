@@ -59,26 +59,30 @@ def set_dir(path='None', reset = False):
     return True
 
 
-def file_input(files, folder):
+def file_input(files=None, folder='/User/sammyoge/Destkop'):
 
     if not files:
         data = input('Enter files or .txt: ').strip(' ')
         if not data:
-
             print("No files specified. Searching folder for all files...")
             set_dir(folder)
             command = "ls -p | grep -v /"
             files = list(filter(None,os.popen(command).read().split('\n')))
             set_dir(reset=True)
             return ' '.join(files)
+        return raw_plus_jpg(data)
+
 
     if '.txt' in files:
+        print('Text file input..')
         with open(files) as f:
             content = f.readlines()
             data = raw_plus_jpg(content)
+            return data
     else:
-        data = raw_plus_jpg(files)
-
+        print('List of files...')
+        data = raw_plus_jpg(str(files))
+        return data
 
 def raw_plus_jpg(files):
     """
@@ -88,10 +92,9 @@ def raw_plus_jpg(files):
     """
 
     if type(files) == str:
-        nefs = list(filter(None,re.sub(r"[\n,]*", "", files).split(' ')))
+        nefs = list(filter(None,files.split()))
     elif type(files) == list:
         nefs = ','.join(files).replace('\n', '').split(',')
-
 
     jpgs = ','.join(nefs).replace('.NEF','.JPG').split(',')
 
