@@ -23,7 +23,10 @@ def client(ctype=None):
     config.read(phq + 'phq.cfg')
 
     if ctype == 'sd':
-        return config['PATHS']['sd_path']
+        folder = input("""Enter desired date for file copying from the available dates listed below:
+                          \n{} \n>""".format((sp.run('ls', cwd=config['PATHS']['sd_path'],shell=True
+                                                     ,capture_output=True,text=True).stdout))) + '/'
+        return config['PATHS']['sd_path'] + folder
     elif ctype == 'x3':
         return config['PATHS']['bythree_dest_path']
     elif ctype == 'rwci':
@@ -41,7 +44,7 @@ def read_files(path=None):
     folder = path or orig_dir
 
     data = sp.run("ls | xargs stat -f '%SB %N' -t'%m-%d-%y'",
-                  cwd=folder, shell=True,capture_output=True, text=True ).stdout
+                  cwd=folder, shell=True,capture_output=True, text=True).stdout
     d = list(filter(len,data.split('\n')))
 
     return d
@@ -103,7 +106,7 @@ def run(to=None,fr=None):
     cp_cmd = []
     cp_cmd += ['cp {f} {d}'.format(f=form(content[k]), d=dest + k) for k in catalog]
     print(cp_cmd)
-    [sp.run(cp_cmd,cwd=src,shell=True) for cmd in cp_cmd]
+    [sp.run(cmd,cwd=src,shell=True) for cmd in cp_cmd]
 
     wb.open('file:///' + dest)
     #os.mkdir('{%s}' % dest)
