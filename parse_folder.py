@@ -80,11 +80,14 @@ def select_dates(content):
     return d.split() or list(content.keys())
 
 
-def run(to=None,fr=None):
+def run(t=None,f=None):
     """
     :param data (list): List of files with date information.
     :return:
     """
+
+    fr = f or input('Enter source directory:')
+    to = t or input('Enter destination directory:')
 
     src = client(fr)
     print('Reading contents of %s' % src)
@@ -116,3 +119,10 @@ def run(to=None,fr=None):
 # os.mkdir('%s' % dest)
 # command = 'cp {f} {d}'.format(f=docs,d=dest)
 # os.system(command)
+
+
+if __name__ == "__main__":
+
+    run()
+
+
