@@ -18,6 +18,7 @@ folder_path = '/Volumes/NIKON D850 /DCIM/115ND850'
 config = configparser.ConfigParser()
 config.read(phq + 'phq.cfg')
 
+
 def client(ctype=None):
     config = configparser.ConfigParser()
     config.read(phq + 'phq.cfg')

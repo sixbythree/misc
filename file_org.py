@@ -90,9 +90,11 @@ def raw_plus_jpg(files):
     :param: None
     :return:
     """
-
+    
+    
     if type(files) == str:
         nefs = list(filter(None,files.split()))
+        print(nefs)
     elif type(files) == list:
         nefs = ','.join(files).replace('\n', '').split(',')
 
@@ -139,7 +141,7 @@ def run(src=None,dest=None,files=None):
                src + '/temp'
 
     data = file_input(files,src)
-    #print (data)
+    print (data)
     mftf(src, dest, data)
 
 
