@@ -23,13 +23,15 @@ folder_path = '/Volumes/NIKON D850 /DCIM/115ND850'  # C.
 
 # Config
 # A. creating global config object
+#    - Config files hold variables in a dictionary format. You can access the keys and values of the config file by
+#      viewing the section and options.
 # B. reading phq.cfg file
 
 config = configparser.ConfigParser()  # A.
 config.read(phq + 'phq.cfg')  # B.
 
 
-def client(ctype=None, c=False):
+def transfer(operation='c'):
     """
 
     :param reset (False): Boolean to reset cwd to original directory (orig_dir).
@@ -45,36 +47,51 @@ def client(ctype=None, c=False):
     config = configparser.ConfigParser()  # A.
     config.read(phq + 'phq.cfg')
 
-    if c==True:
-        folder = ctype or input("""Enter desired subfolder for file copying from the available folders listed below:
-                          \n{} \n>""".format((sp.run('ls', cwd=config['PATHS']['sd_path'],shell=True
-                                                     ,capture_output=True,text=True).stdout))) + '/'
-        return config['PATHS']['sd_path'] + folder
+    if operation=='c':
+        path = input('Enter desired file or directory to copy files from:')
+        if path == 'sd':
+            sub = input("""SD path being used, {p}.\n Enter desired subfolder 
+                           for file copying from the available folders listed 
+                           below:\n {sf} \n>""".format(p=config['PATHS']['sd_path'],
+                                                       sf = (sp.run('ls', cwd=config['PATHS']['sd_path'],
+                                                       shell=True,
+                                                       capture_output=True,text=True).stdout))) + '/'
+            return config['PATHS']['sd_path'] + sub
 
+        if not path:
+            return
+        return path
 
-    if ctype == 'x3':
-        return config['PATHS']['bythree_dest_path']
-    elif ctype == 'rwci':
-        return config['PATHS']['rwci_dest_path']
-    else:
-        return input('Enter desired directory for writing files to:') or '/Users/sammyoge/photo_hq/'
+    if operation == 'w':
+        path = input('Enter desired directory to write files to:')
+        if path == 'x3':
+            return config['PATHS']['bythree_dest_path']
+        elif path == 'rwci':
+            return config['PATHS']['rwci_dest_path']
+        else:
+            return '/Users/sammyoge/photo_hq/'
 
 def read_files(path=None):
     """
-
     :param path (str): Folder path.
     :return:
     """
 
-    folder = path or orig_dir
-
-    data = sp.run("ls | xargs stat -f '%SB %N' -t'%m-%d-%y'",
-                  cwd=folder, shell=True, capture_output=True, text=True).stdout
-    d = list(filter(None,data.split('\n')))
+    if path[-1] == '/':
+        data = sp.run("ls | xargs stat -f '%SB %N' -t'%m-%d-%y'",
+                      cwd=path, shell=True, capture_output=True, text=True).stdout
+        # This subprocess command returns a string containing all files within the specified directory (cwd), along
+        # with the formatted date and name of each file.
+        d = list(filter(None, data.split('\n')))
         # The first parameter is a function which has a condition to filter the input.
         # It returns True on success or False otherwise. However, if you provide a None,
         # then it removes all items except those evaluate to True.
-    return d
+        return d
+    else:
+        data = sp.run("stat -f '%SB %N' -t'%m-%d-%y' {}".format(path),
+                      shell=True, capture_output=True, text=True).stdout
+        d = data.replace('\n','')
+        return d
 
 def files_dict(data):
     """
@@ -130,8 +147,8 @@ def run(t=None,f=None):
     # fr = f or input('Enter source directory:')  # A.
     # to = t or input('Enter destination directory:')  # B.
 
-    src = client(ctype=f, c=True)
-    dest = client(ctype=t)
+    src = transfer(operation='c')
+    dest = transfer(operation='w')
 
     print('Reading contents of %s' % src)
     data = read_files(path=src)
