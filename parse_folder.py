@@ -21,34 +21,43 @@ orig_dir = os.getcwd()  # A.
 phq = '/Users/sammyoge/photo_hq/'  # B.
 folder_path = '/Volumes/NIKON D850 /DCIM/115ND850'  # C.
 
-# Config
-# A. creating global config object
-#    - Config files hold variables in a dictionary format. You can access the keys and values of the config file by
-#      viewing the section and options.
-# B. reading phq.cfg file
-
 config = configparser.ConfigParser()  # A.
 config.read(phq + 'phq.cfg')  # B.
 
-
 def transfer(operation='c'):
     """
+    Transfer function that either copies or writes files or directories from source to destination.
 
-    :param reset (False): Boolean to reset cwd to original directory (orig_dir).
+    :param operation (string): Parameter that determines whether the transfer will be a copy or write operation.
     :return:
-
 
     Description:
 
     A. creating local config object.
     B. reading phq.cfg file into config object.
+     - config files hold variables in a dictionary format. You can access the keys and values of the config file by
+       viewing the section and options.
+    C. if operation=='c':
+       1. receive the user input for file path or directory to copy
+          i. if path=='sd':
+             - receive user input for selecting subfolders from sd
+          ii. if no path provided, return
+    D. if operation=='w':
+       1. receive the user input for path to write to.
+          i. if path=='x3':
+             - return x3 path stored in phq.cfg file.
+          ii. if path=='rwci':
+             - return rwci path stored in phq.cfg file.
+          iii. if path==None:
+             - return photo_hq drive path
+
     """
 
     config = configparser.ConfigParser()  # A.
-    config.read(phq + 'phq.cfg')
+    config.read(phq + 'phq.cfg') # B.
 
-    if operation=='c':
-        path = input('Enter desired file or directory to copy files from:')
+    if operation=='c': # C.
+        path = input('Enter desired file or directory to copy files from:') # C1.
         if path == 'sd':
             sub = input("""SD path being used, {p}.\n Enter desired subfolder 
                            for file copying from the available folders listed 
@@ -62,8 +71,8 @@ def transfer(operation='c'):
             return
         return path
 
-    if operation == 'w':
-        path = input('Enter desired directory to write files to:')
+    if operation == 'w': # D.
+        path = input('Enter desired directory to write files to:') # D1.
         if path == 'x3':
             return config['PATHS']['bythree_dest_path']
         elif path == 'rwci':
@@ -73,6 +82,7 @@ def transfer(operation='c'):
 
 def read_files(path=None):
     """
+
     :param path (str): Folder path.
     :return:
     """
@@ -91,7 +101,7 @@ def read_files(path=None):
         data = sp.run("stat -f '%SB %N' -t'%m-%d-%y' {}".format(path),
                       shell=True, capture_output=True, text=True).stdout
         d = data.replace('\n','')
-        return d
+        return [d]
 
 def files_dict(data):
     """
@@ -183,3 +193,5 @@ if __name__ == "__main__":
     run()
 
 
+# Version 2 Will Include:
+# Options to copy multiple files and multiple directories to specified destinations.
