@@ -1,0 +1,13 @@
+echo 
+"""
+
+Steps to creating executable file:
+
+1. Open terminal
+2. Type: touch "{filename}"
+3. Type: chmod +x "{filename}" - This makes the files executable
+4. Type: nano "{filename}" - This allows you to edit the file
+5. Save the file after editing it by exiting '^X' and pressing y.
+6. Thats all it takes to create an executable file!
+
+"""
