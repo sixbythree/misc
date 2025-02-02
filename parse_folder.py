@@ -77,6 +77,8 @@ def transfer(operation='c'):
             return config['PATHS']['bythree_dest_path']
         elif path == 'rwci':
             return config['PATHS']['rwci_dest_path']
+        elif path == '6' or 'six':
+            return config['PATHS']['six_dest_path']
         else:
             return '/Users/sammyoge/photo_hq/'
 
