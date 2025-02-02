@@ -1,2 +1,7 @@
-
+# Default ignored files
+drive_parser/shelf/
+drive_parser/*.xml
+drive_parser/*.iml
+drive_parser/inspectionProfiles
 drive_parser/.DS_Store
+/.idea
